@@ -5,6 +5,9 @@ const passport = require('passport')
 
 // pull in Mongoose model for uploads
 const Upload = require('../models/upload')
+const s3Upload = require('../../lib/s3Upload.js')
+const multer = require('multer')
+const multerUpload = multer({ dest: '/tmp' })
 
 // we'll use this to intercept any errors that get thrown and send them
 // back to the client with the appropriate status code
@@ -58,19 +61,41 @@ router.get('/uploads/:id', requireToken, (req, res) => {
 
 // CREATE
 // POST /uploads
-router.post('/uploads', requireToken, (req, res) => {
+router.post('/uploads', multerUpload.single('upload[file]'), (req, res) => {
   // set owner of new upload to be current user
-  req.body.upload.owner = req.user.id
+  // req.body.upload.owner = req.user.id
   // The aws upload file route should go here
-  Upload.create(req.body.upload)
-    // respond to succesful `create` with status 201 and JSON of new "upload"
+  console.log('req body:', req.body)
+  console.log('req file:', req.file)
+  s3Upload(req.file)
+    .then(s3Response => Upload.create({
+      title: req.body.upload.title,
+      url: s3Response.Location,
+      tags: req.body.upload.tags,
+      extension: req.body.upload.extension,
+      mimetype: req.file.mimetype
+    }))
+    .then((upload) => {
+      console.log('upload', upload)
+      return upload
+    })
+    .then((s3Response) => {
+      console.log('s3Response is', s3Response)
+      return s3Response
+    })
     .then(upload => {
       res.status(201).json({ upload: upload.toObject() })
     })
-    // if an error occurs, pass it off to our error handler
-    // the error handler needs the error message and the `res` object so that it
-    // can send an error message back to the client
-    .catch(err => handle(err, res))
+    .catch(console.error)
+  // Upload.create(req.body.upload)
+  //   // respond to succesful `create` with status 201 and JSON of new "upload"
+  //   .then(upload => {
+  //     res.status(201).json({ upload: upload.toObject() })
+  //   })
+  //   // if an error occurs, pass it off to our error handler
+  //   // the error handler needs the error message and the `res` object so that it
+  //   // can send an error message back to the client
+  //   .catch(err => handle(err, res))
 })
 
 // UPDATE

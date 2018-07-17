@@ -15,24 +15,25 @@ const uploadSchema = new mongoose.Schema({
   },
   extension: {
     type: String,
-    required: true
+    required: false
   },
   tags: {
     type: String,
-    required: true
+    required: false
   },
   parent: {
     type: String,
-    required: true
+    required: false
   },
   ancestors: {
     type: String,
-    required: true
+    required: false
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    // CHANGE TO TRUE WHEN FRONT END CREDENTIAL WORKS
+    required: false
   }
 }, {
   timestamps: true
