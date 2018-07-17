@@ -61,16 +61,18 @@ router.get('/uploads/:id', requireToken, (req, res) => {
 
 // CREATE
 // POST /uploads
-router.post('/uploads', multerUpload.single('image[file]'), (req, res) => {
+router.post('/uploads', multerUpload.single('upload[file]'), (req, res) => {
   // set owner of new upload to be current user
   // req.body.upload.owner = req.user.id
   // The aws upload file route should go here
+  console.log('req body:', req.body)
+  console.log('req file:', req.file)
   s3Upload(req.file)
     .then(s3Response => Upload.create({
-      title: req.body.image.title,
+      title: req.body.upload.title,
       url: s3Response.Location,
-      tags: req.body.image.tags,
-      extension: req.body.image.extension,
+      tags: req.body.upload.tags,
+      extension: req.body.upload.extension,
       mimetype: req.file.mimetype
     }))
     .then((upload) => {
