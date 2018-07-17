@@ -1,6 +1,6 @@
 #!/bin/bash
 
-API="https://tranquil-thicket-56465.herokuapp.com"
+API="https://serene-eyrie-91568.herokuapp.com"
 URL_PATH="/sign-out"
 
 curl "${API}${URL_PATH}/" \

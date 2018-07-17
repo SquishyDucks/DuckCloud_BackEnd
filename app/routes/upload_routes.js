@@ -100,7 +100,7 @@ router.post('/uploads', multerUpload.single('upload[file]'), (req, res) => {
 
 // UPDATE
 // PATCH /uploads/5a7db6c74d55bc51bdf39793
-router.patch('/uploads/:id', requireToken, (req, res) => {
+router.patch('/uploads/:id', (req, res) => {
   // if the client attempts to change the `owner` property by including a new
   // owner, prevent that by deleting that key/value pair
   delete req.body.upload.owner
