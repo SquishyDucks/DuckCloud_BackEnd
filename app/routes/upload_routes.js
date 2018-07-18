@@ -70,6 +70,7 @@ router.post('/uploads', multerUpload.single('upload[file]'), (req, res) => {
   s3Upload(req.file)
     .then(s3Response => Upload.create({
       title: req.body.upload.title,
+      owner: req.body.upload.owner,
       url: s3Response.Location,
       tags: req.body.upload.tags,
       extension: req.body.upload.extension,
