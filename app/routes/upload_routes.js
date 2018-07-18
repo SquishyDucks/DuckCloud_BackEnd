@@ -100,12 +100,13 @@ router.post('/uploads', multerUpload.single('upload[file]'), (req, res) => {
 
 // UPDATE
 // PATCH /uploads/5a7db6c74d55bc51bdf39793
-router.patch('/uploads/:id', (req, res) => {
+router.patch('/uploads/:id', requireToken, (req, res) => {
   // if the client attempts to change the `owner` property by including a new
   // owner, prevent that by deleting that key/value pair
-  delete req.body.upload.owner
+  delete req.body.owner
 
   Upload.findById(req.params.id)
+    .then(console.log('req.params.id is ', req.params.id))
     .then(handle404)
     .then(upload => {
       // pass the `req` object and the Mongoose record to `requireOwnership`
@@ -115,14 +116,18 @@ router.patch('/uploads/:id', (req, res) => {
       // the client will often send empty strings for parameters that it does
       // not want to update. We delete any key/value pair where the value is
       // an empty string before updating
-      Object.keys(req.body.upload).forEach(key => {
-        if (req.body.upload[key] === '') {
-          delete req.body.upload[key]
+      // console.log('req.body.upload is ', req.body.upload)
+      // console.log('req.body is ', req.body)
+      // console.log('req.upload is', req.upload)
+      // console.log('upload is ', upload)
+      Object.keys(req.body).forEach(key => {
+        if (req.body[key] === '') {
+          delete req.body[key]
         }
       })
 
       // pass the result of Mongoose's `.update` to the next `.then`
-      return upload.update(req.body.upload)
+      return upload.update(req.body)
     })
     // if that succeeded, return 204 and no JSON
     .then(() => res.sendStatus(204))
