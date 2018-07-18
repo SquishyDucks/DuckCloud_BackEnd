@@ -1,4 +1,4 @@
-'use script'
+'use strict'
 
 const s3Upload = require('../lib/s3Upload')
 const mime = require('mime-types')
