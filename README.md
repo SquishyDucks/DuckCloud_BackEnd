@@ -51,7 +51,7 @@ half hour of effort, we opened an issue in the General Assembly project queue.
 
 #### ERDs
 
-ERD - ![alt text](https://imgur.com/a/jYaPh4t)
+ERD - ![alt text](https://i.imgur.com/VcR6H3X.jpg)
 
 
 ## Catalog of Routes
