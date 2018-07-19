@@ -65,8 +65,8 @@ router.post('/uploads', requireToken, multerUpload.single('upload[file]'), (req,
   // set owner of new upload to be current user
   // req.body.upload.owner = req.user.id
   // The aws upload file route should go here
-  console.log('req body:', req.body)
-  console.log('req file:', req.file)
+  // console.log('req body:', req.body)
+  // console.log('req file:', req.file)
   s3Upload(req.file)
     .then(s3Response => Upload.create({
       title: req.body.upload.title,
@@ -77,11 +77,11 @@ router.post('/uploads', requireToken, multerUpload.single('upload[file]'), (req,
       mimetype: req.file.mimetype
     }))
     .then((upload) => {
-      console.log('upload', upload)
+      // console.log('upload', upload)
       return upload
     })
     .then((s3Response) => {
-      console.log('s3Response is', s3Response)
+      // console.log('s3Response is', s3Response)
       return s3Response
     })
     .then(upload => {
@@ -107,7 +107,7 @@ router.patch('/uploads/:id', requireToken, (req, res) => {
   delete req.body.owner
 
   Upload.findById(req.params.id)
-    .then(console.log('req.params.id is ', req.params.id))
+    // .then(console.log('req.params.id is ', req.params.id))
     .then(handle404)
     .then(upload => {
       // pass the `req` object and the Mongoose record to `requireOwnership`
