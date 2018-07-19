@@ -33,7 +33,7 @@ const router = express.Router()
 
 // INDEX
 // GET /uploads
-router.get('/uploads', (req, res) => {
+router.get('/uploads', requireToken, (req, res) => {
   Upload.find()
     .then(uploads => {
       // `uploads` will be an array of Mongoose documents
@@ -61,7 +61,7 @@ router.get('/uploads/:id', requireToken, (req, res) => {
 
 // CREATE
 // POST /uploads
-router.post('/uploads', multerUpload.single('upload[file]'), (req, res) => {
+router.post('/uploads', requireToken, multerUpload.single('upload[file]'), (req, res) => {
   // set owner of new upload to be current user
   // req.body.upload.owner = req.user.id
   // The aws upload file route should go here
