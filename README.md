@@ -43,11 +43,10 @@ another reviewed and approved the merge.
 
 Problem-solving involved:
 
--Using console logs and the debugger to isolate problems and determine solutions.
--Using our own Github issue queue to identify and isolate problems for all
-of us to investigate when convenient.
--Git commits after successful resolution of problems.
--When we were unable to solve a problem after collaboration and more than a
+- Using console logs and the debugger to isolate problems and determine solutions.
+- Using our own Github issue queue to identify and isolate problems for all of us to investigate when convenient.
+- Git commits after successful resolution of problems.
+- When we were unable to solve a problem after collaboration and more than a
 half hour of effort, we opened an issue in the General Assembly project queue.
 
 #### ERDs
@@ -380,10 +379,7 @@ ID=5b4f628ef23c980014310eb6 TOKEN='6f8a893e1ae1628645a87a9674b4d343' TITLE='NewS
 Response:
 
 ```md
-HTTP/1.1 200 OK
-Content-Type: application/json; charset=utf-8
-
-
+HTTP/1.1 204 No Content
 ```
 ---
 #### DELETE /items/:id
