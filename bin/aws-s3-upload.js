@@ -11,7 +11,7 @@ const file = {
 
 s3Upload(file)
   .then((s3Response) => {
-    console.log('s3Response is ', s3Response)
+    // console.log('s3Response is ', s3Response)
     return s3Response
   })
   .catch(console.error)
