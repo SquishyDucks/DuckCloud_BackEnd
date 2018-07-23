@@ -87,7 +87,7 @@ router.post('/uploads', requireToken, multerUpload.single('upload[file]'), (req,
     .then(upload => {
       res.status(201).json({ upload: upload.toObject() })
     })
-    .catch(console.error)
+    .catch(err => handle(err, res))
   // Upload.create(req.body.upload)
   //   // respond to succesful `create` with status 201 and JSON of new "upload"
   //   .then(upload => {
